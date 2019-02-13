@@ -53,6 +53,15 @@ class ViewController: UIViewController {
         self.logAnalytics(name: "clear", content: "entry cleared")
     }
     
+    @IBAction func calculateValue(_ sender: Any) {
+        var formula = formulaLabel.text!.replacingOccurrences(of: "x", with: "*")
+        formula = formula.replacingOccurrences(of: "÷", with: "/")
+        let expression = NSExpression(format: formula)
+        let result = expression.expressionValue(with: nil, context: nil) as! NSNumber
+        
+        formulaLabel.text = result.stringValue
+    }
+    
     func logAnalytics(name: String, content: String) {
         Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
             AnalyticsParameterItemID: "id-\(name)",
